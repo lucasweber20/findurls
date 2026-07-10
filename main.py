@@ -1,22 +1,30 @@
 import requests
 import re
 import argparse
+import time
 
 
 DATA = []
 REGEX = "https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)"
 
+parser = argparse.ArgumentParser()
+
+parser.add_argument("-u", "--url", help="Set url. Example: -u www.example.com", type=str)
+parser.add_argument("-l", "--list", help="Add urls file. Example -u urls.txt", type=str)
+parser.add_argument("-o", "--output", help="Save urls in file. Example: -o urls.txt", type=str)
+
+args = parser.parse_args()
+
 def main():
 
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument("-u", "--url", help="Set url. Example: -u www.example.com", type=str)
-    parser.add_argument("-o", "--output", help="Save urls in file. Example: -o urls.txt", type=str)
-
-    args = parser.parse_args()
-
-    wayback = get_wayback_urls(args.url)
-    commoncrawl = get_commoncrawl_urls(args.url)
+    if args.list:
+        file_read = open(args.list).read().splitlines()
+        for url in file_read:
+            wayback = get_wayback_urls(url)
+            commoncrawl = get_commoncrawl_urls(url)
+    else:
+        wayback = get_wayback_urls(args.url)
+        commoncrawl = get_commoncrawl_urls(args.url)
 
     for host in DATA:
         if args.output:
