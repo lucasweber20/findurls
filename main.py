@@ -22,11 +22,9 @@ def main():
         for url in file_read:
             wayback = get_wayback_urls(url)
             commoncrawl = get_commoncrawl_urls(url)
-            alienvault = get_alienvault(url)
     else:
         wayback = get_wayback_urls(args.url)
         commoncrawl = get_commoncrawl_urls(args.url)
-        alienvault = get_alienvault(args.url)
 
     for host in DATA:
         if args.output:
@@ -59,30 +57,6 @@ def get_commoncrawl_urls(url):
             return True
         except:
             continue
-
-def get_alienvault(url):
-    while True:
-        for num in range(1, 50):
-            try:
-                req = requests.get(f"https://otx.alienvault.com/api/v1/indicators/hostname/{url}/url_list?limit=100&page={num}", timeout=10)
-                if "429" in req.status_code:
-                    time.sleep(120)
-                    req = requests.get(f"https://otx.alienvault.com/api/v1/indicators/hostname/{url}/url_list?limit=100&page={num}", timeout=10)
-
-                req_text = req.text
-                urls = re.findall(REGEX, req_text)
-
-                if urls:
-                    for url in urls:
-                        DATA.append(url)
-                else:
-                    continue
-            except:
-                continue
-        return True
-
-def get_vtotal_urls(url):
-    pass
 
 if __name__ == "__main__":
     main()
