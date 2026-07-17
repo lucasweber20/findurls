@@ -1,2 +1,0 @@
-www.bing.com
-https://otx.alienvault.com/api/v1/indicators/hostname/%s/url_list?limit=50&page=%d
