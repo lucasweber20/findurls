@@ -1,4 +1,0 @@
-*.8x8.com
-*.dxi.eu
-*.jit.si
-*.wavecell.com
