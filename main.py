@@ -24,8 +24,8 @@ def main():
             commoncrawl = get_commoncrawl_urls(url)
             alienvault = get_alienvault(url)
     else:
-        #wayback = get_wayback_urls(args.url)
-        #commoncrawl = get_commoncrawl_urls(args.url)
+        wayback = get_wayback_urls(args.url)
+        commoncrawl = get_commoncrawl_urls(args.url)
         alienvault = get_alienvault(args.url)
 
     for host in DATA:
