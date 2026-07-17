@@ -1,7 +1,6 @@
 import requests
 import re
 import argparse
-import time
 
 
 DATA = []
