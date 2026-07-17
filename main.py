@@ -64,8 +64,13 @@ def get_alienvault(url):
     while True:
         for num in range(1, 50):
             try:
-                req = requests.get(f"https://otx.alienvault.com/api/v1/indicators/hostname/{url}/url_list?limit=100&page={num}", timeout=10).text
-                urls = re.findall(REGEX, req)
+                req = requests.get(f"https://otx.alienvault.com/api/v1/indicators/hostname/{url}/url_list?limit=100&page={num}", timeout=10)
+                if "429" in req.status_code:
+                    time.sleep(120)
+                    req = requests.get(f"https://otx.alienvault.com/api/v1/indicators/hostname/{url}/url_list?limit=100&page={num}", timeout=10)
+
+                req_text = req.text
+                urls = re.findall(REGEX, req_text)
 
                 if urls:
                     for url in urls:
