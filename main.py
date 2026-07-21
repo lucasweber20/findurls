@@ -17,7 +17,7 @@ args = parser.parse_args()
 def main():
 
     if args.list:
-        file_read = open(args.list).read().splitlines()
+        file_read = open(args.list, encoding="utf-16").read().splitlines()
         for url in file_read:
             wayback = get_wayback_urls(url)
             commoncrawl = get_commoncrawl_urls(url)
